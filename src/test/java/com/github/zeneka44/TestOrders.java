@@ -59,8 +59,19 @@ public class TestOrders {
     }
 
     @Test
-    public void testOrderFlow() {
+    public void testFlowByHeaderOrderButton() {
         OrderPage orderPage = mainPage.clickOrder();
+        orderPage.fillPersonalData(name, lastname, address, metro, phone);
+        orderPage.clickNext();
+        orderPage.fillRentDetails(date, term, colorValue, comment);
+        orderPage.clickOrder();
+        orderPage.confirmOrder();
+        assertTrue(orderPage.getModalHeaderText().contains("Заказ оформлен"));
+        assertTrue(orderPage.getModalHeaderText().contains("Номер заказа:"));
+    }
+    @Test
+    public void testFlowByRoadMapOrderButton() {
+        OrderPage orderPage = mainPage.clickRoadMapOrderButton();
         orderPage.fillPersonalData(name, lastname, address, metro, phone);
         orderPage.clickNext();
         orderPage.fillRentDetails(date, term, colorValue, comment);

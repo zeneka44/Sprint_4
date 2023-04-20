@@ -25,6 +25,8 @@ public class MainPage {
     private final By acceptCookieButton = id("rcc-confirm-button");
     // Кнопка "Заказать" в хедере
     private final By orderHeaderButton = cssSelector("[class*='Header_Nav'] button[class*='Button_Button']");
+    // Кнопка "Заказать" в середине
+    private final By roadMapOrderButton = cssSelector("[class*='Home_FinishButton'] button[class*='Button_Button']");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -39,8 +41,7 @@ public class MainPage {
 
     public void expandQuestion(String question) {
         WebElement element = driver.findElement(xpath(format(questionHeaderButton, question)));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", element);
+        scrollTo(element);
         element.click();
         wait.until(visibilityOfElementLocated(xpath(format(answer, question))));
     }
@@ -52,6 +53,18 @@ public class MainPage {
     public OrderPage clickOrder() {
         driver.findElement(orderHeaderButton).click();
         return new OrderPage(driver);
+    }
+
+    public OrderPage clickRoadMapOrderButton() {
+        WebElement element = driver.findElement(roadMapOrderButton);
+        scrollTo(element);
+        element.click();
+        return new OrderPage(driver);
+    }
+
+    private void scrollTo(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", element);
     }
 }
 

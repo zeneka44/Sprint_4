@@ -46,10 +46,6 @@ public class OrderPage {
         driver.findElement(next).click();
     }
 
-    public WebElement getInput(String name) {
-        return driver.findElement(xpath(format(input, name)));
-    }
-
     public void fillRentDetails(String date, String term, String colorValue, String comment) {
         WebElement dateInput = getInput("* Когда привезти самокат");
         dateInput.sendKeys(date);
@@ -70,6 +66,10 @@ public class OrderPage {
 
     public String getModalHeaderText() {
         return driver.findElement(modalOrderHeader).getText();
+    }
+
+    private WebElement getInput(String name) {
+        return driver.findElement(xpath(format(input, name)));
     }
 
 }
